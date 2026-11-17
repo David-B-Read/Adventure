@@ -1,0 +1,21 @@
+{
+  "title": "The Clocktower Adventure",
+  "introduction": "Explore the area. Type 'help' for commands, or 'quit' to leave.",
+  "startRoom": "Town Square",
+  "rooms": [
+    {
+      "name": "Town Square",
+      "description": "A quiet square sits beneath the shadow of an old clock tower.",
+      "exits": {
+        "north": "Forest Path"
+      }
+    },
+    {
+      "name": "Forest Path",
+      "description": "Tall trees crowd the path. A trail leads back toward town.",
+      "exits": {
+        "south": "Town Square"
+      }
+    }
+  ]
+}
