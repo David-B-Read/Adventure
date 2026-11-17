@@ -4,17 +4,19 @@
   "startRoom": "Town Square",
   "rooms": [
     {
+      "id": 1,
       "name": "Town Square",
       "description": "A quiet square sits beneath the shadow of an old clock tower.",
       "exits": {
-        "north": "Forest Path"
+        "north": 2
       }
     },
     {
+      "id": 2,
       "name": "Forest Path",
       "description": "Tall trees crowd the path. A trail leads back toward town.",
       "exits": {
-        "south": "Town Square"
+        "south": 1
       }
     }
   ]

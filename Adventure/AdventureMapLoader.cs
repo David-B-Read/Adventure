@@ -38,9 +38,11 @@ public static class AdventureMapLoader
         {
             var roomData = map.Rooms[index]
                 ?? throw new InvalidDataException($"Room at index {index} must be a JSON object.");
+            var roomId = roomData.Id
+                ?? throw new InvalidDataException($"Adventure map property 'rooms[{index}].id' is required.");
             var roomName = RequireValue(roomData.Name, $"rooms[{index}].name");
             var description = RequireValue(roomData.Description, $"rooms[{index}].description");
-            var room = new GameRoom(roomName, description);
+            var room = new GameRoom(roomId, roomName, description);
 
             if (roomData.Exits is null)
             {
@@ -49,7 +51,7 @@ public static class AdventureMapLoader
 
             foreach (var (direction, destination) in roomData.Exits)
             {
-                room.AddExit(direction, RequireValue(destination, $"rooms[{index}].exits.{direction}"));
+                room.AddExit(direction, destination);
             }
 
             rooms.Add(room);
@@ -78,8 +80,9 @@ public static class AdventureMapLoader
 
     private sealed class AdventureRoomData
     {
+        public int? Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public Dictionary<string, string?>? Exits { get; set; } = new();
+        public Dictionary<string, int>? Exits { get; set; } = new();
     }
 }

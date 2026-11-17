@@ -4,7 +4,7 @@ public sealed class AdventureGame
 {
     private readonly string _title;
     private readonly string _introduction;
-    private readonly Dictionary<string, GameRoom> _rooms = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<int, GameRoom> _rooms = new();
     private readonly Dictionary<string, (string HelpText, Action<GameContext, string> Handler)> _commands =
         new(StringComparer.OrdinalIgnoreCase);
     private GameRoom _currentRoom;
@@ -24,10 +24,15 @@ public sealed class AdventureGame
         foreach (var room in rooms)
         {
             ArgumentNullException.ThrowIfNull(room);
-            _rooms.Add(room.Name, room);
+            if (!_rooms.TryAdd(room.Id, room))
+            {
+                throw new ArgumentException($"Room ID '{room.Id}' is duplicated.", nameof(rooms));
+            }
         }
 
-        if (!_rooms.TryGetValue(startRoomName, out _currentRoom!))
+        _currentRoom = _rooms.Values.FirstOrDefault(room =>
+            string.Equals(room.Name, startRoomName, StringComparison.OrdinalIgnoreCase))!;
+        if (_currentRoom is null)
         {
             throw new ArgumentException($"Start room '{startRoomName}' was not found.", nameof(startRoomName));
         }
@@ -39,7 +44,7 @@ public sealed class AdventureGame
                 if (!_rooms.ContainsKey(destination))
                 {
                     throw new ArgumentException(
-                        $"Room '{room.Name}' has an exit '{direction}' to unknown room '{destination}'.",
+                        $"Room '{room.Name}' has an exit '{direction}' to unknown room ID '{destination}'.",
                         nameof(rooms));
                 }
             }
@@ -147,11 +152,11 @@ public sealed class AdventureGame
 
     internal GameRoom CurrentRoom => _currentRoom;
 
-    internal void MoveTo(string roomName)
+    internal void MoveTo(int roomId)
     {
-        if (!_rooms.TryGetValue(roomName, out var room))
+        if (!_rooms.TryGetValue(roomId, out var room))
         {
-            throw new ArgumentException($"Room '{roomName}' was not found.", nameof(roomName));
+            throw new ArgumentException($"Room ID '{roomId}' was not found.", nameof(roomId));
         }
 
         _currentRoom = room;
@@ -173,7 +178,7 @@ public sealed class GameContext
 
     public TextWriter Output => _game.Output;
 
-    public void MoveTo(string roomName) => _game.MoveTo(roomName);
+    public void MoveTo(int roomId) => _game.MoveTo(roomId);
 
     public void Stop() => _game.Stop();
 }
