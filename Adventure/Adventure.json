@@ -7,6 +7,7 @@
       "id": 1,
       "name": "Entrance Hall",
       "description": "A broad oak staircase rises beneath a painted ceiling. Doors lead into the principal rooms.",
+      "objects": [],
       "exits": {
         "west": 2,
         "east": 3,
@@ -18,6 +19,7 @@
       "id": 2,
       "name": "Drawing Room",
       "description": "Tall sash windows overlook the garden, and a fire glows in the marble hearth.",
+      "objects": ["silver candlestick"],
       "exits": {
         "east": 1,
         "north": 5,
@@ -28,6 +30,7 @@
       "id": 3,
       "name": "Dining Room",
       "description": "A long mahogany table is set beneath a sparkling chandelier.",
+      "objects": [],
       "exits": {
         "west": 1,
         "east": 8,
@@ -38,6 +41,7 @@
       "id": 4,
       "name": "Great Hall",
       "description": "Antlers and old portraits decorate this lofty room, where a stone fireplace dominates the north wall.",
+      "objects": [],
       "exits": {
         "south": 1,
         "east": 7
@@ -47,6 +51,7 @@
       "id": 5,
       "name": "Library",
       "description": "Floor-to-ceiling shelves hold leather-bound books and a brass reading lamp.",
+      "objects": ["brass key", "pocket watch"],
       "exits": {
         "south": 2,
         "east": 6
@@ -56,6 +61,7 @@
       "id": 6,
       "name": "Morning Room",
       "description": "A comfortable, sunlit room opens onto the terrace.",
+      "objects": [],
       "exits": {
         "north": 2,
         "west": 5,
@@ -66,6 +72,7 @@
       "id": 7,
       "name": "Conservatory",
       "description": "Glass walls enclose a riot of ferns, palms, and flowering plants.",
+      "objects": [],
       "exits": {
         "west": 4,
         "south": 3,
@@ -76,6 +83,7 @@
       "id": 8,
       "name": "Kitchen",
       "description": "Copper pans hang above a large worktable in the heart of the household.",
+      "objects": ["wooden spoon"],
       "exits": {
         "west": 3,
         "north": 9,
@@ -86,6 +94,7 @@
       "id": 9,
       "name": "Pantry",
       "description": "Shelves are neatly stocked with jars, preserves, and dry goods.",
+      "objects": ["jar of marmalade"],
       "exits": {
         "west": 6,
         "south": 8,
@@ -96,6 +105,7 @@
       "id": 10,
       "name": "Servants' Hall",
       "description": "A plain table and a row of coat hooks serve the household staff.",
+      "objects": [],
       "exits": {
         "west": 8,
         "north": 7,
@@ -106,6 +116,7 @@
       "id": 11,
       "name": "Main Staircase",
       "description": "The staircase curves up to a quiet landing and the private rooms above.",
+      "objects": [],
       "exits": {
         "downstairs": 1,
         "north": 12
@@ -115,6 +126,7 @@
       "id": 12,
       "name": "Master Bedroom",
       "description": "A four-poster bed stands between tall wardrobes and a small writing desk.",
+      "objects": ["sealed letter"],
       "exits": {
         "south": 11
       }

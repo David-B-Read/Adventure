@@ -5,6 +5,7 @@ public sealed class AdventureGame
     private readonly string _title;
     private readonly string _introduction;
     private readonly Dictionary<int, GameRoom> _rooms = new();
+    private readonly Dictionary<string, int?> _objectLocations = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, (string HelpText, Action<GameContext, string> Handler)> _commands =
         new(StringComparer.OrdinalIgnoreCase);
     private GameRoom _currentRoom;
@@ -48,11 +49,22 @@ public sealed class AdventureGame
                         nameof(rooms));
                 }
             }
+
+            foreach (var item in room.Objects)
+            {
+                if (!_objectLocations.TryAdd(item, room.Id))
+                {
+                    throw new ArgumentException($"Object '{item}' is defined more than once.", nameof(rooms));
+                }
+            }
         }
 
         RegisterCommand("help", "Show available commands.", (_, _) => ShowHelp());
         RegisterCommand("look", "Describe your current room.", (_, _) => DescribeCurrentRoom());
         RegisterCommand("go", "Move through an exit (for example: go north).", Go);
+        RegisterCommand("take", "Pick up an object in this room.", (_, itemName) => Take(itemName));
+        RegisterCommand("leave", "Drop an object in this room.", (_, itemName) => Leave(itemName));
+        RegisterCommand("inventory", "List the objects you are carrying.", (_, _) => ShowInventory());
         RegisterCommand("quit", "Leave the game.", (context, _) => context.Stop());
         RegisterCommand("exit", "Leave the game.", (context, _) => context.Stop());
     }
@@ -131,6 +143,14 @@ public sealed class AdventureGame
         _output.WriteLine(_currentRoom.Exits.Count == 0
             ? "There are no visible exits."
             : $"Exits: {string.Join(", ", _currentRoom.Exits.Keys)}");
+        var objects = _objectLocations
+            .Where(item => item.Value == _currentRoom.Id)
+            .Select(item => item.Key)
+            .OrderBy(item => item, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        _output.WriteLine(objects.Length == 0
+            ? "There are no objects here."
+            : $"Objects: {string.Join(", ", objects)}");
     }
 
     private void Go(GameContext context, string direction)
@@ -148,6 +168,56 @@ public sealed class AdventureGame
         }
 
         context.MoveTo(destination);
+    }
+
+    private void Take(string itemName)
+    {
+        var name = itemName.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            _output.WriteLine("Take what?");
+            return;
+        }
+
+        if (!_objectLocations.TryGetValue(name, out var location) || location != _currentRoom.Id)
+        {
+            _output.WriteLine($"There is no '{name}' here to take.");
+            return;
+        }
+
+        _objectLocations[name] = null;
+        _output.WriteLine($"You take the {name}.");
+    }
+
+    private void Leave(string itemName)
+    {
+        var name = itemName.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            _output.WriteLine("Leave what?");
+            return;
+        }
+
+        if (!_objectLocations.TryGetValue(name, out var location) || location is not null)
+        {
+            _output.WriteLine($"You are not carrying '{name}'.");
+            return;
+        }
+
+        _objectLocations[name] = _currentRoom.Id;
+        _output.WriteLine($"You leave the {name} here.");
+    }
+
+    private void ShowInventory()
+    {
+        var items = _objectLocations
+            .Where(item => item.Value is null)
+            .Select(item => item.Key)
+            .OrderBy(item => item, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        _output.WriteLine(items.Length == 0
+            ? "You are carrying nothing."
+            : $"You are carrying: {string.Join(", ", items)}");
     }
 
     internal GameRoom CurrentRoom => _currentRoom;

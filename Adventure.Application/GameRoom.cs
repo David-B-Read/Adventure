@@ -3,6 +3,7 @@ namespace Adventure;
 public sealed class GameRoom
 {
     private readonly Dictionary<string, int> _exits = new(StringComparer.OrdinalIgnoreCase);
+    private readonly List<string> _objects = [];
 
     public GameRoom(int id, string name, string description)
     {
@@ -21,6 +22,15 @@ public sealed class GameRoom
     public string Description { get; }
 
     public IReadOnlyDictionary<string, int> Exits => _exits;
+
+    public IReadOnlyList<string> Objects => _objects;
+
+    public GameRoom AddObject(string name)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        _objects.Add(name);
+        return this;
+    }
 
     public GameRoom AddExit(string direction, int destinationRoomId)
     {

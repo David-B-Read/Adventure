@@ -54,6 +54,16 @@ public static class AdventureMapLoader
                 room.AddExit(direction, destination);
             }
 
+            if (roomData.Objects is null)
+            {
+                throw new InvalidDataException($"Room '{roomName}' must have an objects array (use [] for no objects).");
+            }
+
+            foreach (var item in roomData.Objects)
+            {
+                room.AddObject(RequireValue(item, $"rooms[{index}].objects"));
+            }
+
             rooms.Add(room);
         }
 
@@ -84,5 +94,6 @@ public static class AdventureMapLoader
         public string? Name { get; set; }
         public string? Description { get; set; }
         public Dictionary<string, int>? Exits { get; set; } = new();
+        public List<string?>? Objects { get; set; } = [];
     }
 }
