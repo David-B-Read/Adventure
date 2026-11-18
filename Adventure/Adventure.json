@@ -1,22 +1,122 @@
 {
-  "title": "The Clocktower Adventure",
-  "introduction": "Explore the area. Type 'help' for commands, or 'quit' to leave.",
-  "startRoom": "Town Square",
+  "title": "The Country House Adventure",
+  "introduction": "Explore the house. Type 'help' for commands, or 'quit' to leave.",
+  "startRoom": "Entrance Hall",
   "rooms": [
     {
       "id": 1,
-      "name": "Town Square",
-      "description": "A quiet square sits beneath the shadow of an old clock tower.",
+      "name": "Entrance Hall",
+      "description": "A broad oak staircase rises beneath a painted ceiling. Doors lead into the principal rooms.",
       "exits": {
-        "north": 2
+        "west": 2,
+        "east": 3,
+        "north": 4,
+        "upstairs": 11
       }
     },
     {
       "id": 2,
-      "name": "Forest Path",
-      "description": "Tall trees crowd the path. A trail leads back toward town.",
+      "name": "Drawing Room",
+      "description": "Tall sash windows overlook the garden, and a fire glows in the marble hearth.",
       "exits": {
-        "south": 1
+        "east": 1,
+        "north": 5,
+        "south": 6
+      }
+    },
+    {
+      "id": 3,
+      "name": "Dining Room",
+      "description": "A long mahogany table is set beneath a sparkling chandelier.",
+      "exits": {
+        "west": 1,
+        "east": 8,
+        "north": 7
+      }
+    },
+    {
+      "id": 4,
+      "name": "Great Hall",
+      "description": "Antlers and old portraits decorate this lofty room, where a stone fireplace dominates the north wall.",
+      "exits": {
+        "south": 1,
+        "east": 7
+      }
+    },
+    {
+      "id": 5,
+      "name": "Library",
+      "description": "Floor-to-ceiling shelves hold leather-bound books and a brass reading lamp.",
+      "exits": {
+        "south": 2,
+        "east": 6
+      }
+    },
+    {
+      "id": 6,
+      "name": "Morning Room",
+      "description": "A comfortable, sunlit room opens onto the terrace.",
+      "exits": {
+        "north": 2,
+        "west": 5,
+        "east": 9
+      }
+    },
+    {
+      "id": 7,
+      "name": "Conservatory",
+      "description": "Glass walls enclose a riot of ferns, palms, and flowering plants.",
+      "exits": {
+        "west": 4,
+        "south": 3,
+        "east": 10
+      }
+    },
+    {
+      "id": 8,
+      "name": "Kitchen",
+      "description": "Copper pans hang above a large worktable in the heart of the household.",
+      "exits": {
+        "west": 3,
+        "north": 9,
+        "east": 10
+      }
+    },
+    {
+      "id": 9,
+      "name": "Pantry",
+      "description": "Shelves are neatly stocked with jars, preserves, and dry goods.",
+      "exits": {
+        "west": 6,
+        "south": 8,
+        "east": 10
+      }
+    },
+    {
+      "id": 10,
+      "name": "Servants' Hall",
+      "description": "A plain table and a row of coat hooks serve the household staff.",
+      "exits": {
+        "west": 8,
+        "north": 7,
+        "south": 9
+      }
+    },
+    {
+      "id": 11,
+      "name": "Main Staircase",
+      "description": "The staircase curves up to a quiet landing and the private rooms above.",
+      "exits": {
+        "downstairs": 1,
+        "north": 12
+      }
+    },
+    {
+      "id": 12,
+      "name": "Master Bedroom",
+      "description": "A four-poster bed stands between tall wardrobes and a small writing desk.",
+      "exits": {
+        "south": 11
       }
     }
   ]
