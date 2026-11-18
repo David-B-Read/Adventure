@@ -11,4 +11,8 @@
     <None Update="Adventure.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Adventure.Application\Adventure.Application.csproj" />
+  </ItemGroup>
+
 </Project>

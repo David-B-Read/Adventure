@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="Adventure.Application/Adventure.Application.csproj" />
+  <Project Path="Adventure.Tests/Adventure.Tests.csproj" />
   <Project Path="Adventure/Adventure.csproj" />
 </Solution>
